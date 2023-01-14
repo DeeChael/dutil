@@ -67,6 +67,7 @@ public class JOBuilder<T> implements BaseBuilder<JsonObject, T> {
         this.jsonObject.addProperty(key, value);
         return this;
     }
+
     public JOBuilder<T> character(String key, Character value) {
         return this.character(key, value, value);
     }

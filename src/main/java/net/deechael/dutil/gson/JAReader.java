@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import net.deechael.dutil.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class JAReader {
@@ -409,6 +408,7 @@ public class JAReader {
             return new JAReader(defaultValue);
         return new JAReader(element.getAsJsonArray());
     }
+
     public String string(int index, Predicate<String> predicate, @NotNull String defaultValue) {
         Preconditions.checkNull(defaultValue);
         if (!in(index))

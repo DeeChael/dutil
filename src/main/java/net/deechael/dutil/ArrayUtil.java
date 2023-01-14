@@ -19,6 +19,28 @@ public final class ArrayUtil {
         return (T[]) list.toArray();
     }
 
+    public static <T> T[] removeDuplicated(T[] ts) {
+        Preconditions.checkNull(ts);
+        List<T> list = new ArrayList<>();
+        for (T t : ts) {
+            if (list.contains(t))
+                continue;
+            list.add(t);
+        }
+        return (T[]) list.toArray();
+    }
+
+    public static <T> boolean contains(T[] array, T item) {
+        if (item == null && array.length - clean(array).length > 0)
+            return true;
+        if (item == null)
+            return false;
+        for (T t : clean(array))
+            if (t.equals(item))
+                return true;
+        return false;
+    }
+
     @NotNull
     public static <T> List<T> toList(T[] array, boolean mutable) {
         Preconditions.checkNull(array);

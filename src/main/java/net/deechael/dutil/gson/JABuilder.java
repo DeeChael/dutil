@@ -64,6 +64,7 @@ public class JABuilder<T> implements BaseBuilder<JsonArray, T> {
         this.jsonArray.add(value);
         return this;
     }
+
     public JABuilder<T> character(Character value) {
         return this.character(value, value);
     }
