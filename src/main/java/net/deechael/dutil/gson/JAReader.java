@@ -6,6 +6,9 @@ import com.google.gson.JsonObject;
 import net.deechael.dutil.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+import java.util.function.Predicate;
+
 public class JAReader {
 
     private final JsonArray jsonArray;
@@ -136,6 +139,156 @@ public class JAReader {
         return new JAReader(element.getAsJsonArray());
     }
 
+    public String string(int index, Predicate<String> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isString())
+            throw new RuntimeException("Not exists");
+        String value = element.getAsString();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public Number number(int index, Predicate<Number> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        Number value = element.getAsNumber();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public byte byteNumber(int index, Predicate<Byte> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        byte value = element.getAsByte();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public short shortNumber(int index, Predicate<Short> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        short value = element.getAsShort();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public int intNumber(int index, Predicate<Integer> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        int value = element.getAsInt();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public long longNumber(int index, Predicate<Long> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        long value = element.getAsLong();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public float floatNumber(int index, Predicate<Float> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        float value = element.getAsFloat();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public double doubleNumber(int index, Predicate<Double> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isNumber())
+            throw new RuntimeException("Not exists");
+        double value = element.getAsDouble();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public boolean bool(int index, Predicate<Boolean> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!element.getAsJsonPrimitive().isBoolean())
+            throw new RuntimeException("Not exists");
+        boolean value = element.getAsBoolean();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public JOReader object(int index, Predicate<JOReader> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonObject())
+            throw new RuntimeException("Not exists");
+        JOReader value = new JOReader(element.getAsJsonObject());
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public JAReader array(int index, Predicate<JAReader> predicate) {
+        if (!in(index))
+            throw new RuntimeException("Out of bound");
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonArray())
+            throw new RuntimeException("Not exists");
+        JAReader value = new JAReader(element.getAsJsonArray());
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
     public String string(int index, @NotNull String defaultValue) {
         Preconditions.checkNull(defaultValue);
         if (!in(index))
@@ -255,6 +408,159 @@ public class JAReader {
         if (!element.isJsonArray())
             return new JAReader(defaultValue);
         return new JAReader(element.getAsJsonArray());
+    }
+    public String string(int index, Predicate<String> predicate, @NotNull String defaultValue) {
+        Preconditions.checkNull(defaultValue);
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isString())
+            return defaultValue;
+        String value = element.getAsString();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public Number number(int index, Predicate<Number> predicate, @NotNull Number defaultValue) {
+        Preconditions.checkNull(defaultValue);
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        Number value = element.getAsNumber();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public byte byteNumber(int index, Predicate<Byte> predicate, byte defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        byte value = element.getAsByte();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public short shortNumber(int index, Predicate<Short> predicate, short defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        short value = element.getAsShort();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public int intNumber(int index, Predicate<Integer> predicate, int defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        int value = element.getAsInt();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public long longNumber(int index, Predicate<Long> predicate, long defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        long value = element.getAsLong();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public float floatNumber(int index, Predicate<Float> predicate, float defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        float value = element.getAsFloat();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public double doubleNumber(int index, Predicate<Double> predicate, double defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isNumber())
+            return defaultValue;
+        double value = element.getAsDouble();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public boolean bool(int index, Predicate<Boolean> predicate, boolean defaultValue) {
+        if (!in(index))
+            return defaultValue;
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonPrimitive())
+            return defaultValue;
+        if (!element.getAsJsonPrimitive().isBoolean())
+            return defaultValue;
+        boolean value = element.getAsBoolean();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public JOReader object(int index, Predicate<JOReader> predicate, @NotNull JsonObject defaultValue) {
+        Preconditions.checkNull(defaultValue);
+        if (!in(index))
+            return new JOReader(defaultValue);
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonObject())
+            return new JOReader(defaultValue);
+        JOReader value = new JOReader(element.getAsJsonObject());
+        if (!predicate.test(value))
+            return new JOReader(defaultValue);
+        return value;
+    }
+
+    public JAReader array(int index, Predicate<JAReader> predicate, @NotNull JsonArray defaultValue) {
+        Preconditions.checkNull(defaultValue);
+        if (!in(index))
+            return new JAReader(defaultValue);
+        JsonElement element = jsonArray.get(index);
+        if (!element.isJsonArray())
+            return new JAReader(defaultValue);
+        JAReader value = new JAReader(element.getAsJsonArray());
+        if (!predicate.test(value))
+            return new JAReader(defaultValue);
+        return value;
     }
 
     @NotNull

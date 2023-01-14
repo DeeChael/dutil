@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import net.deechael.dutil.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Predicate;
+
 public class JOReader {
 
     private final JsonObject jsonObject;
@@ -36,7 +38,7 @@ public class JOReader {
         return jsonObject.get(path).getAsNumber();
     }
 
-    public short byteNumber(String path) {
+    public byte byteNumber(String path) {
         Preconditions.checkNull(path);
         if (!jsonObject.has(path))
             throw new RuntimeException("Not exists");
@@ -131,6 +133,156 @@ public class JOReader {
         return new JAReader(this.jsonObject.getAsJsonArray(path));
     }
 
+    public String string(String path, Predicate<String> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isString())
+            throw new RuntimeException("Not exists");
+        String value = jsonObject.get(path).getAsString();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public Number number(String path, Predicate<Number> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        Number value = jsonObject.get(path).getAsNumber();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public byte byteNumber(String path, Predicate<Byte> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        byte value = jsonObject.get(path).getAsByte();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public short shortNumber(String path, Predicate<Short> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        short value = jsonObject.get(path).getAsShort();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public int intNumber(String path, Predicate<Integer> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        int value = jsonObject.get(path).getAsInt();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public long longNumber(String path, Predicate<Long> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        long value = jsonObject.get(path).getAsLong();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public float floatNumber(String path, Predicate<Float> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        float value = jsonObject.get(path).getAsFloat();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public double doubleNumber(String path, Predicate<Double> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            throw new RuntimeException("Not exists");
+        double value = jsonObject.get(path).getAsDouble();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public boolean bool(String path, Predicate<Boolean> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonPrimitive())
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.getAsJsonPrimitive(path).isBoolean())
+            throw new RuntimeException("Not exists");
+        boolean value = jsonObject.get(path).getAsBoolean();
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public JOReader object(String path, Predicate<JOReader> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonObject())
+            throw new RuntimeException("Not exists");
+        JOReader value = new JOReader(this.jsonObject.getAsJsonObject(path));
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
+    public JAReader array(String path, Predicate<JAReader> predicate) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            throw new RuntimeException("Not exists");
+        if (!jsonObject.get(path).isJsonArray())
+            throw new RuntimeException("Not exists");
+        JAReader value = new JAReader(this.jsonObject.getAsJsonArray(path));
+        if (!predicate.test(value))
+            throw new RuntimeException("Not exists");
+        return value;
+    }
+
     public String string(String path, @NotNull String defaultValue) {
         Preconditions.checkNull(path);
         Preconditions.checkNull(defaultValue);
@@ -155,7 +307,7 @@ public class JOReader {
         return jsonObject.get(path).getAsNumber();
     }
 
-    public short byteNumber(String path, short defaultValue) {
+    public byte byteNumber(String path, byte defaultValue) {
         Preconditions.checkNull(path);
         if (!jsonObject.has(path))
             return defaultValue;
@@ -250,6 +402,160 @@ public class JOReader {
         if (!jsonObject.get(path).isJsonArray())
             return new JAReader(defaultValue);
         return new JAReader(this.jsonObject.getAsJsonArray(path));
+    }
+
+    public String string(String path, Predicate<String> predicate, @NotNull String defaultValue) {
+        Preconditions.checkNull(path);
+        Preconditions.checkNull(defaultValue);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isString())
+            return defaultValue;
+        String value = jsonObject.get(path).getAsString();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public Number number(String path, Predicate<Number> predicate, @NotNull Number defaultValue) {
+        Preconditions.checkNull(path);
+        Preconditions.checkNull(defaultValue);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        Number value = jsonObject.get(path).getAsNumber();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public byte byteNumber(String path, Predicate<Byte> predicate, byte defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        byte value = jsonObject.get(path).getAsByte();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public short shortNumber(String path, Predicate<Short> predicate, short defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        short value = jsonObject.get(path).getAsShort();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public int intNumber(String path, Predicate<Integer> predicate, int defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        int value = jsonObject.get(path).getAsInt();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public long longNumber(String path, Predicate<Long> predicate, long defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        long value = jsonObject.get(path).getAsLong();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public float floatNumber(String path, Predicate<Float> predicate, float defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        float value = jsonObject.get(path).getAsFloat();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public double doubleNumber(String path, Predicate<Double> predicate, double defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isNumber())
+            return defaultValue;
+        double value = jsonObject.get(path).getAsDouble();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public boolean bool(String path, Predicate<Boolean> predicate, boolean defaultValue) {
+        Preconditions.checkNull(path);
+        if (!jsonObject.has(path))
+            return defaultValue;
+        if (!jsonObject.get(path).isJsonPrimitive())
+            return defaultValue;
+        if (!jsonObject.getAsJsonPrimitive(path).isBoolean())
+            return defaultValue;
+        boolean value = jsonObject.get(path).getAsBoolean();
+        if (!predicate.test(value))
+            return defaultValue;
+        return value;
+    }
+
+    public JOReader object(String path, Predicate<JOReader> predicate, @NotNull JsonObject defaultValue) {
+        Preconditions.checkNull(path);
+        Preconditions.checkNull(defaultValue);
+        if (!jsonObject.has(path))
+            return new JOReader(defaultValue);
+        if (!jsonObject.get(path).isJsonObject())
+            return new JOReader(defaultValue);
+        JOReader value = new JOReader(this.jsonObject.getAsJsonObject(path));
+        if (!predicate.test(value))
+            return new JOReader(defaultValue);
+        return value;
+    }
+
+    public JAReader array(String path, Predicate<JAReader> predicate, @NotNull JsonArray defaultValue) {
+        Preconditions.checkNull(path);
+        Preconditions.checkNull(defaultValue);
+        if (!jsonObject.has(path))
+            return new JAReader(defaultValue);
+        if (!jsonObject.get(path).isJsonArray())
+            return new JAReader(defaultValue);
+        JAReader value = new JAReader(this.jsonObject.getAsJsonArray(path));
+        if (!predicate.test(value))
+            return new JAReader(defaultValue);
+        return value;
     }
 
     @NotNull
