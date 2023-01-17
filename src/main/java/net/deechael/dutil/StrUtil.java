@@ -2,11 +2,55 @@ package net.deechael.dutil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class StrUtil {
+
+    public static String shortUUID2Long(String shortUuid) {
+        if (shortUuid.length() != 32) return "00000000-0000-0000-0000-000000000000";
+        String[] strings = new String[5];
+        strings[0] = shortUuid.substring(0, 8);
+        strings[1] = shortUuid.substring(8, 12);
+        strings[2] = shortUuid.substring(12, 16);
+        strings[3] = shortUuid.substring(16, 20);
+        strings[4] = shortUuid.substring(20, 32);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String string : strings) {
+            stringBuilder.append(string).append("-");
+        }
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
+    }
+
+    public static String toBase64(String textToEncryption) {
+        return Base64.getEncoder().encodeToString(textToEncryption.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String base64ToString(String base64Text) {
+        return new String(Base64.getDecoder().decode(base64Text.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+    }
+
+    public static URL toURL(String url) {
+        try {
+            return new URL(url);
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+
+    public static URI toURI(String url) {
+        try {
+            return new URI(url);
+        } catch (URISyntaxException e) {
+            return null;
+        }
+    }
 
     public static boolean containsIgnoreCase(String owner, String child) {
         return owner.toLowerCase().contains(child.toLowerCase());

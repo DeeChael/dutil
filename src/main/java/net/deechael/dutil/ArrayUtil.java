@@ -5,8 +5,37 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ArrayUtil {
+
+    public static <T> int index(T[] array, T item) {
+        AtomicInteger atomicInteger = new AtomicInteger(-1);
+        LoopUtil.foreach(array, ((integer, t) -> {
+            if (t.equals(item))
+                atomicInteger.set(integer);
+        }));
+        return atomicInteger.get();
+    }
+
+    public static boolean equals(Object[] aArray, Object[] bArray) {
+        if (aArray.length != bArray.length) return false;
+        if (aArray == bArray) return true;
+        AtomicBoolean result = new AtomicBoolean(true);
+        LoopUtil.foreach(aArray, new LoopUtil.BiLooper<Object>() {
+            @Override
+            public void accept(int integer, Object a) {
+                Object b = bArray[integer];
+                if (!(Objects.equals(a, b))) {
+                    result.set(false);
+                    cancel();
+                }
+            }
+        });
+        return result.get();
+    }
 
     public static <T> T[] clean(T[] ts) {
         Preconditions.checkNull(ts);
