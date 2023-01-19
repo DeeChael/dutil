@@ -3,6 +3,7 @@ package net.deechael.dutil.gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.deechael.dutil.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,268 +24,268 @@ public class JAReader {
 
     public String string(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isString())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsString();
     }
 
     public Number number(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsNumber();
     }
 
     public byte byteNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsByte();
     }
 
     public short shortNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsShort();
     }
 
     public int intNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsInt();
     }
 
     public long longNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsLong();
     }
 
     public float floatNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsFloat();
     }
 
     public double doubleNumber(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsDouble();
     }
 
     public boolean bool(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isBoolean())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return element.getAsBoolean();
     }
 
     public JOReader object(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonObject())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return new JOReader(element.getAsJsonObject());
     }
 
     public JAReader array(int index) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonArray())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return new JAReader(element.getAsJsonArray());
     }
 
     public String string(int index, Predicate<String> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isString())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         String value = element.getAsString();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public Number number(int index, Predicate<Number> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         Number value = element.getAsNumber();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public byte byteNumber(int index, Predicate<Byte> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         byte value = element.getAsByte();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public short shortNumber(int index, Predicate<Short> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         short value = element.getAsShort();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public int intNumber(int index, Predicate<Integer> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         int value = element.getAsInt();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public long longNumber(int index, Predicate<Long> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         long value = element.getAsLong();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public float floatNumber(int index, Predicate<Float> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         float value = element.getAsFloat();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public double doubleNumber(int index, Predicate<Double> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isNumber())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         double value = element.getAsDouble();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public boolean bool(int index, Predicate<Boolean> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonPrimitive())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         if (!element.getAsJsonPrimitive().isBoolean())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         boolean value = element.getAsBoolean();
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public JOReader object(int index, Predicate<JOReader> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonObject())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         JOReader value = new JOReader(element.getAsJsonObject());
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
     public JAReader array(int index, Predicate<JAReader> predicate) {
         if (!in(index))
-            throw new RuntimeException("Out of bound");
+            throw new JsonParseException("Out of bound");
         JsonElement element = jsonArray.get(index);
         if (!element.isJsonArray())
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         JAReader value = new JAReader(element.getAsJsonArray());
         if (!predicate.test(value))
-            throw new RuntimeException("Not exists");
+            throw new JsonParseException("Not exists");
         return value;
     }
 
